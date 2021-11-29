@@ -105,6 +105,7 @@ typedef void (^QYFileCompletion)(NSString *fileName, NSString *filePath);
 
 /**
  *  访客分流 是否开启机器人
+ *  @discussion 仅设置staffId/groupId时生效
  */
 @property (nonatomic, assign) BOOL openRobotInShuntMode;
 
@@ -117,6 +118,11 @@ typedef void (^QYFileCompletion)(NSString *fileName, NSString *filePath);
  *  机器人欢迎语 模板Id
  */
 @property (nonatomic, assign) int64_t robotWelcomeTemplateId;
+
+/**
+ *  多入口分流 模板Id
+ */
+@property (nonatomic, assign) int64_t shuntTemplateId;
 
 /**
  *  会话窗口来源
@@ -177,10 +183,10 @@ typedef void (^QYFileCompletion)(NSString *fileName, NSString *filePath);
 - (void)requestHumanStaff;
 
 /**
- *  切换人工客服
+ *  切换人工客服，客服ID、客服分组ID二者选择一种即可
  *
  *  @param staffId 客服ID
- *  @param groupId 分组ID
+ *  @param groupId 客服分组ID
  *  @param closetip 切换提示语
  *  @param closeCompletion 退出旧会话完成的回调
  *  @param requestCompletion 请求新会话完成的回调
@@ -236,6 +242,7 @@ typedef void (^QYFileCompletion)(NSString *fileName, NSString *filePath);
 
 /**
  *  拍摄视频
+ *  自动发送
  */
 - (void)shootVideoWithCompletion:(QYVideoCompletion)completion;
 
@@ -287,29 +294,24 @@ typedef void (^QYEvaluationBlock)(QYEvaluactionData *data);
 typedef void (^QYEvaluationCompletion)(QYEvaluationState state);
 
 /**
- *  满意度评价事件
+ *  人工满意度评价事件
  */
 @property (nonatomic, copy) QYEvaluationBlock evaluationBlock;
 
 /**
- *  发送满意度评价结果
+ *  机器人满意度评价事件
+ */
+@property (nonatomic, copy) QYEvaluationBlock robotEvaluationBlock;
+
+/**
+ *  发送人工满意度评价结果
  */
 - (void)sendEvaluationResult:(QYEvaluactionResult *)result completion:(QYEvaluationCompletion)completion;
 
-
-/** 以下为自定义卡片消息相关接口 **/
-
 /**
- *  自定义卡片消息回调
- *
- *  @param jsonString 自定义卡片消息数据
+ *  发送机器人满意度评价结果
  */
-typedef void (^QYCustomMessageDataBlock)(NSString *jsonString);
-
-/**
- *  自定义卡片消息事件，回调时机为收到该类消息时刻
- */
-@property (nonatomic, copy) QYCustomMessageDataBlock customMessageDataBlock;
+- (void)sendRobotEvaluationResult:(QYEvaluactionResult *)result completion:(QYEvaluationCompletion)completion;
 
 
 @end

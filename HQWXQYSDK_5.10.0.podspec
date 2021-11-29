@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
 
   spec.name = "HQWXQYSDK_5.10.0"
-  spec.version = "5.10.0"
+  spec.version = "6.10.0"
   spec.summary = "网易七鱼客服访客端 iOS SDK"
   spec.homepage = "https://www.qiyukf.com"
   spec.license = { :"type" => "Copyright", :"text" => " Copyright 2020 Netease \n"} 
@@ -17,4 +17,7 @@ Pod::Spec.new do |spec|
   spec.libraries = 'z','sqlite3.0','xml2','c++','resolv'
   spec.resources = "Resources/*.*"
 
+
+ spec.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+ spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 end
